@@ -20,10 +20,8 @@
 ## ⚙️ GitHub Analytics
 
 <p align="center">
-<a href="https://github.com/vlad9710">
-  <img height="100%" src="https://github-readme-stats-eight-theta.vercel.app/api?username=vlad9710&show_icons=true&theme=algolia&include_all_commits=true&count_private=true"/>
-  <img height="100%" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=vlad9710&layout=compact&langs_count=8&theme=algolia"/>
-</a>
+  <img src="github_stats.svg" alt="GitHub Stats"/>
+  <img src="top_langs.svg" alt="Top Languages"/>
 </p>
 
 
