@@ -1,9 +1,11 @@
 name: Update Stats from Test Branch
 
-on:
-  workflow_dispatch:
+on: 
   push:
-    branches: [ test ]
+      branches: 
+      - main
+      - test
+  workflow_dispatch:
 
 jobs:
   generate-stats:
