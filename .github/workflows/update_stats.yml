@@ -1,29 +1,30 @@
-name: Update GitHub Stats
+name: Update Stats from Test Branch
 
 on:
-  schedule:
-    - cron: '0 12 * * *'  # Обновлять ежедневно в 12:00 UTC
-  workflow_dispatch:       # Разрешить ручной запуск
+  workflow_dispatch:  # Позволяет запускать вручную
+  push:
+    branches: [ test ]  # Автозапуск только для ветки test
 
 jobs:
-  update-stats:
+  generate-stats:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          python-version: '3.11'
-          
-      - name: Generate Stats Images
+          ref: test  # Явно указываем ветку
+
+      - name: Generate stats
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          # Устанавливаем зависимости
-          pip install pygithub
-          
-          # Скачиваем статистику с приватными репами
-          curl -s "https://github-readme-stats-eight-theta.vercel.app/api?username=vlad9710&show_icons=true&theme=algolia&count_private=true&token=$GH_TOKEN&cache_seconds=0" > github_stats.svg
-          curl -s "https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=vlad9710&layout=compact&langs_count=8&theme=algolia&token=$GH_TOKEN&cache_seconds=0" > top_langs.svg
+          echo "Токен: (скрыт для безопасности)"
+          curl -s "https://github-readme-stats.vercel.app/api?username=vlad9710&count_private=true&token=$GH_TOKEN" > stats.svg
+          echo "Статистика сохранена в файл"
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-stats
+          path: stats.svg
