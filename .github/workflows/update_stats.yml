@@ -1,9 +1,9 @@
 name: Update Stats from Test Branch
 
 on:
-  workflow_dispatch:  # Позволяет запускать вручную
+  workflow_dispatch:
   push:
-    branches: [ test ]  # Автозапуск только для ветки test
+    branches: [ test ]
 
 jobs:
   generate-stats:
@@ -13,18 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: test  # Явно указываем ветку
+          ref: test
 
       - name: Generate stats
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          echo "Токен: (скрыт для безопасности)"
           curl -s "https://github-readme-stats.vercel.app/api?username=vlad9710&count_private=true&token=$GH_TOKEN" > stats.svg
-          echo "Статистика сохранена в файл"
+          echo "Статистика сохранена"
 
       - name: Upload results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # ← Исправлено здесь!
         with:
           name: github-stats
           path: stats.svg
+          retention-days: 3  # Автоудаление через 3 дня
